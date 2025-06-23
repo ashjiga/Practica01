@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/plantilla :: head}">
+    <title>Árboles</title>
+</head>
+<body>
+
+<section th:fragment="botonesAgregar" class="py-4 mb-4 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">   
+                <a th:href="@{/arbol/nuevo}" class="btn btn-primary btn-block">
+                    <i class="fas fa-plus"></i> [[#{arbol.agregar}]]
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section th:fragment="listadoArboles">
+    <div class="container mt-4">
+        <h1>[[#{arbol.listado}]]</h1>
+
+        <section th:replace="~{arbol/fragmentos :: botonesAgregar}"/>
+
+        <table class="table table-bordered table-striped">
+            <thead class="table-light">
+                <tr>
+                    <th>ID</th>
+                    <th>[[#{arbol.nombreComun}]]</th>
+                    <th>[[#{arbol.tipoFlor}]]</th>
+                    <th>[[#{arbol.durezaMadera}]]</th>
+                    <th>[[#{arbol.imagen}]]</th>
+                    <th>[[#{accion.acciones}]]</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="arbol : ${arboles}">
+                    <td th:text="${arbol.idArbol}">1</td>
+                    <td th:text="${arbol.nombreComun}">Roble</td>
+                    <td th:text="${arbol.tipoFlor}">Simple</td>
+                    <td th:text="${arbol.durezaMadera}">7</td>
+                    <td><img th:src="${arbol.rutaImagen}" width="60" /></td>
+                    <td>
+                        <a th:href="@{/arbol/editar/{id}(id=${arbol.idArbol})}" class="btn btn-warning btn-sm">
+                            <i class="fas fa-pencil"></i> [[#{accion.editar}]]
+                        </a>
+                        <a th:href="@{/arbol/eliminar/{id}(id=${arbol.idArbol})}" class="btn btn-danger btn-sm">
+                            <i class="fas fa-trash"></i> [[#{accion.eliminar}]]
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<section th:fragment="formularioArbol">
+    <div class="container mt-5">
+        <h2 th:text="${arbol.idArbol != null} ? #{arbol.editar} : #{arbol.agregar}" class="mb-4"></h2>
+
+        <form th:action="@{/arbol/guardar}" th:object="${arbol}" method="post"
+              class="border p-4 shadow rounded bg-light">
+            <input type="hidden" th:field="*{idArbol}"/>
+
+            <div class="mb-3">
+                <label class="form-label fw-bold">[[#{arbol.nombreComun}]]</label>
+                <input type="text" th:field="*{nombreComun}" class="form-control" required/>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-bold">[[#{arbol.tipoFlor}]]</label>
+                <input type="text" th:field="*{tipoFlor}" class="form-control"/>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-bold">[[#{arbol.durezaMadera}]]</label>
+                <input type="number" th:field="*{durezaMadera}" class="form-control"/>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-bold">[[#{arbol.rutaImagen}]]</label>
+                <input type="text" th:field="*{rutaImagen}" class="form-control"/>
+            </div>
+
+            <div class="d-flex justify-content-between">
+                <button type="submit" class="btn btn-success">
+                    <i class="fas fa-save"></i> [[#{accion.guardar}]]
+                </button>
+                <a th:href="@{/arbol/listado}" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i> [[#{accion.cancelar}]]
+                </a>
+            </div>
+        </form>
+    </div>
+</section>
+
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+    <head th:replace="~{layout/plantilla :: head}">
+        <title>Gestor de Árboles</title>
+    </head>
+
+    <body>
+        <div class="d-flex flex-column min-vh-100"> 
+
+            <header th:replace="~{layout/plantilla :: header}"></header>
+
+            <main class="flex-fill">
+                <div class="container mt-5 text-center">
+                    <h1 class="mb-4">[[#{pagina.bienvenida}]]</h1>
+                    <a th:href="@{/arbol/listado}" class="btn btn-success mt-3">[[#{accion.verArboles}]]</a>
+                </div>
+            </main>
+
+            <footer th:replace="~{layout/plantilla :: footer}"></footer>
+
+        </div>
+    </body>
+</html>
